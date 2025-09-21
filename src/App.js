@@ -1,5 +1,6 @@
 import React from "react";
-import Graph from "./Graph";
+
+import Graph from "./components/graph_visualizing/Graph";
 
 function App() {
   const myValues = [5, 10, 3, 8, 15, 20, 12, 18];
