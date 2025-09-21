@@ -1,23 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Graph from "./components/graph_visualizing/Graph";
 
 function App() {
+  const myValues = [5, 10, 3, 8, 15, 20, 12, 18];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ width: "80%", margin: "auto", marginTop: "50px" }}>
+      <h2>My Graph</h2>
+      <Graph values={myValues} />
     </div>
   );
 }
