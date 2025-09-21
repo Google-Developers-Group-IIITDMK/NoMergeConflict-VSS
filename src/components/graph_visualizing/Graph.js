@@ -1,4 +1,4 @@
-// src/Graph.js
+// src/components/stock_engine/Graph.js
 import React from "react";
 import {
   LineChart,
@@ -10,24 +10,34 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const Graph = ({ values }) => {
-  // Convert the array of values into chart-friendly data
-  const data = values.map((val, index) => ({
-    name: index + 1, // x-axis label
-    value: val       // y-axis value
-  }));
-
+const Graph = React.memo(({ data }) => {
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={400}>
       <LineChart data={data}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="value" stroke="#8884d8" strokeWidth={2} />
+        <XAxis
+          dataKey="time"
+          tickFormatter={(time) => new Date(time).toLocaleTimeString()}
+        />
+        <YAxis domain={["auto", "auto"]} />
+        <Tooltip
+          labelFormatter={(time) => new Date(time).toLocaleTimeString()}
+          formatter={(val) => `$${val.toFixed(2)}`}
+        />
+        <Line
+          type="monotone"
+          dataKey="price"
+          stroke="#4caf50"
+          strokeWidth={2}
+          dot={false}
+          isAnimationActive={false} // prevents re-animating the line
+        />
       </LineChart>
     </ResponsiveContainer>
   );
-};
+});
 
-export default Graph;
+// Only re-render when the data length changes (i.e., new point appended)
+export default React.memo(Graph, (prevProps, nextProps) => {
+  return prevProps.data.length === nextProps.data.length;
+});

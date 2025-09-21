@@ -1,16 +1,23 @@
+// src/App.js
 import React from "react";
-
+import { useStockEngine } from "./components/stock_engine/StockEngine";
 import Graph from "./components/graph_visualizing/Graph";
 
-function App() {
-  const myValues = [5, 10, 3, 8, 15, 20, 12, 18];
+export default function App() {
+  const stockData = useStockEngine({
+    initialPrice: 150,
+    intervalMs: 1000,
+    maxChange: 2.5,
+  });
 
   return (
-    <div style={{ width: "80%", margin: "auto", marginTop: "50px" }}>
-      <h2>My Graph</h2>
-      <Graph values={myValues} />
+    <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4 font-sans">
+      <div className="w-full max-w-6xl mx-auto bg-gray-800 rounded-2xl shadow-2xl p-6 border border-gray-700">
+        <h1 className="text-3xl font-bold text-green-400 mb-4">
+          Real-Time Stock Simulator
+        </h1>
+        <Graph data={stockData} />
+      </div>
     </div>
   );
 }
-
-export default App;
