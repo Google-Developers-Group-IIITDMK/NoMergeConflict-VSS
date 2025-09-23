@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useStockEngine } from "./components/stock_engine/StockEngine";
 import Graph from "./components/graph_visualizing/Graph";
 import Login from "./components/login";
-import Dashboard from "./components/Dashboard";
 import PortfolioCard from "./components/PortfolioCard";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
@@ -31,7 +30,7 @@ export default function App() {
         <Header />
         <PortfolioCard />
         <Sidebar />
-        <Tranasactions />
+        <Transactions />
         <Watchlist />
         <Graph data={stockData} />
       </div>
