@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useStockEngine } from "./components/stock_engine/StockEngine";
 import Graph from "./components/graph_visualizing/Graph";
 import Login from "./components/login";
+import Header from "./components/Header";
 
 export default function App() {
   const stockData = useStockEngine({
@@ -22,6 +23,7 @@ export default function App() {
         <h1 className="text-3xl font-bold text-green-400 mb-4">
           Real-Time Stock Simulator
         </h1>
+        <Header />
         <Graph data={stockData} />
       </div>
     </div>
