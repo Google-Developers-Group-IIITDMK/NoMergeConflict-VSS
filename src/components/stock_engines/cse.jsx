@@ -4,6 +4,7 @@ import CseStockChart from "../stock_charts/cse"
 export default function CseStockPrice() {
   const [currStock, setCurrStock] = useState(() => gaussianRandom(100, 0.5));
   const [lastChange, setLastChange] = useState(0);
+  const [cur_time, setCurTime] = useState(0);
 
   function gaussianRandom(mean = 0, stdev = 1) {
     let u = 1 - Math.random(); // Subtraction to avoid log(0)
@@ -18,6 +19,8 @@ export default function CseStockPrice() {
       setLastChange(change);
       setCurrStock(prevStock => prevStock + change);
 
+      setCurTime(prevTime => prevTime + 1);
+
     }, 1000);
     return () => clearInterval(intervalId);
   }, []);
@@ -27,8 +30,8 @@ export default function CseStockPrice() {
   const changeSymbol = isPositive ? '▲' : '▼';
 
   return (
-    <>
-            {currStock.toFixed(4)}
-    </>
+      <>
+        {cur_time} ::::: {currStock.toFixed(4)}
+      </>
   );
 }
