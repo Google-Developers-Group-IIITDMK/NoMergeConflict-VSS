@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import CseStockChart from "../stock_charts/cse"
+
 export default function CseStockPrice() {
   const [currStock, setCurrStock] = useState(() => gaussianRandom(100, 0.5));
   const [lastChange, setLastChange] = useState(0);
