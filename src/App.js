@@ -10,22 +10,22 @@ import Watchlist from "./components/Watchlist";
 import { LineChart, TrendingUp, User, Settings } from "lucide-react";
 
 // Sidebar Component
-const Sidebar = () => (
-  <div className="bg-gray-900 w-64 min-h-screen p-6 text-white shadow-lg border-r border-gray-800">
-    <h2 className="text-2xl font-bold mb-10 text-green-400">IIIT StockSim</h2>
-    <ul className="space-y-6 text-lg">
-      <li className="flex items-center gap-3 hover:text-green-400 cursor-pointer">
-        <LineChart size={20} /> Dashboard
-      </li>
-      <li className="flex items-center gap-3 hover:text-green-400 cursor-pointer">
-        <User size={20} /> Profile
-      </li>
-      <li className="flex items-center gap-3 hover:text-green-400 cursor-pointer">
-        <Settings size={20} /> Settings
-      </li>
-    </ul>
-  </div>
-);
+// const Sidebar = () => (
+//   <div className="bg-gray-900 w-64 min-h-screen p-6 text-white shadow-lg border-r border-gray-800">
+//     <h2 className="text-2xl font-bold mb-10 text-green-400">IIIT StockSim</h2>
+//     <ul className="space-y-6 text-lg">
+//       <li className="flex items-center gap-3 hover:text-green-400 cursor-pointer">
+//         <LineChart size={20} /> Dashboard
+//       </li>
+//       <li className="flex items-center gap-3 hover:text-green-400 cursor-pointer">
+//         <User size={20} /> Profile
+//       </li>
+//       <li className="flex items-center gap-3 hover:text-green-400 cursor-pointer">
+//         <Settings size={20} /> Settings
+//       </li>
+//     </ul>
+//   </div>
+// );
 
 export default function App() {
   const stockData = useStockEngine({
