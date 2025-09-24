@@ -16,7 +16,7 @@ const MechStockChart = React.memo(({ data }) => {
   //   data.length > MAX_VISIBLE_POINTS ? data.slice(-MAX_VISIBLE_POINTS) : data;
   const chartData = data;
   return (
-    <div style={{ width: "50%", height: 400, border: "1px solid #ccc" }}>
+    <div style={{ width: "95%", height: 400, border: "1px solid #ccc" }}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
