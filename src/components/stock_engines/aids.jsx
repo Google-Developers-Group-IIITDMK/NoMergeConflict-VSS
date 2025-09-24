@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import AidsStockChart from "../stock_charts/aids"
+import React, { useEffect, useState } from 'react';
+import AidsStockChart from "../stock_charts/aids";
 
-export default function AidsStockPrice() {
-  const [currStock, setCurrStock] = useState(() => gaussianRandom(100, 1));
+export default function AidsStockPrice({ currStock, setCurrStock }) {
   const [lastChange, setLastChange] = useState(0);
   const [cur_time, setCurTime] = useState(0);
-  const [data, setData] = useState([{time : cur_time, value : currStock}]);
+  const [data, setData] = useState([{ time: cur_time, value: currStock }]);
+
   function gaussianRandom(mean = 0, stdev = 1) {
-    let u = 1 - Math.random(); // Subtraction to avoid log(0)
+    let u = 1 - Math.random();
     let v = Math.random();
     let z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
     return z * stdev + mean;
@@ -16,39 +16,30 @@ export default function AidsStockPrice() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const change = gaussianRandom(0, 1);
-      setCurrStock(prevStock => {
-      const change = gaussianRandom(0, 1);
       setLastChange(change);
 
-      const newStock = prevStock + change;
+      setCurrStock(prevStock => {
+        const newStock = prevStock + change;
 
-      // Increment time based on previous data length
-      setCurTime(prevTime => prevTime + 1);
+        setCurTime(prevTime => prevTime + 1);
 
-      // Add new data point using the **latest stock and next time**
-      setData(prevData => [
-        ...prevData,
-        { time: prevData.length, value: newStock }
-      ]);
+        setData(prevData => [...prevData, { time: prevData.length, value: newStock }]);
 
-      return newStock;
-    });
+        return newStock;
+      });
     }, 1000);
+
     return () => clearInterval(intervalId);
-  }, []);
+  }, [setCurrStock]);
 
   const isPositive = lastChange >= 0;
-  const textColorClass = isPositive ? 'text-green-400' : 'text-red-400';
   const changeSymbol = isPositive ? '▲' : '▼';
 
   return (
-      <>
-        <div>
-          {data.time}
-
-          {data.value}
-        </div>
-        <AidsStockChart data = {data} key = {data.time}/>
-      </>
+    <div style={{ width: "1500px" }}>
+      <h3>AIDS Stock</h3>
+      <p>Current Price: ${currStock.toFixed(2)} {changeSymbol}</p>
+      <AidsStockChart data={data} key={data.length} />
+    </div>
   );
 }
