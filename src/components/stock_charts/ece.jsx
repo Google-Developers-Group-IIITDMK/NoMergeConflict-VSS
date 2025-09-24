@@ -9,7 +9,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const CseStockChart = React.memo(({ data }) => {
+const EceStockChart = React.memo(({ data }) => {
   const MAX_VISIBLE_POINTS = 50;
 
   // const chartData =
@@ -39,6 +39,6 @@ const CseStockChart = React.memo(({ data }) => {
 });
 
 export default React.memo(
-  CseStockChart,
+  EceStockChart,
   (prevProps, nextProps) => prevProps.data.length === nextProps.data.length
 );

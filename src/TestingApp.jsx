@@ -8,13 +8,8 @@ export default function App(){
     return(
     <div>
         <CseStockPrice />
-        <br />
         <AidsStockPrice />
-        <br />
         <EceStockPrice />
-        <br />
         <MechStockPrice />
-        <br />
-        <CseStockChart />
     </div>)
 }

@@ -9,13 +9,12 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-const CseStockChart = React.memo(({ data }) => {
+const MechStockChart = React.memo(({ data }) => {
   const MAX_VISIBLE_POINTS = 50;
 
   // const chartData =
   //   data.length > MAX_VISIBLE_POINTS ? data.slice(-MAX_VISIBLE_POINTS) : data;
   const chartData = data;
-
   return (
     <div style={{ width: "50%", height: 400, border: "1px solid #ccc" }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -39,6 +38,6 @@ const CseStockChart = React.memo(({ data }) => {
 });
 
 export default React.memo(
-  CseStockChart,
+  MechStockChart,
   (prevProps, nextProps) => prevProps.data.length === nextProps.data.length
 );
