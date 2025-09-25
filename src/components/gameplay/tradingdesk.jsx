@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import MoneyWallet from "./moneywallet";
 import StockWallet from "./stockwallet";
-import TradingDesk from "./tradingdesk"
+// import TradingDesk from "./tradingdesk"
+import Trade from "./trade"
 export default function TradingDesk({ stockPrices = {} }) {
   // stockPrices should be an object like: 
   // { AIDS: 123.45, CSE: 98.76, ECE: 110.2, MECH: 77.1 }
