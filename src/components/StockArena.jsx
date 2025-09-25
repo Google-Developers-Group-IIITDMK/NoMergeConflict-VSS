@@ -19,7 +19,7 @@ export default function StockArena() {
   const stockNames = Object.keys(stockComponents);
 
   return (
-    <div style={{ width: "70%", display: "flex", flexDirection: "column", gap: "20px" }}>
+    <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "20px" }}>
       {/* Top Chart */}
       <div style={{ border: "1px solid #ccc", padding: "10px" }}>
         <label>
@@ -37,40 +37,11 @@ export default function StockArena() {
           </select>
         </label>
 
-        <div style={{ marginTop: "10px", height: "100%" }}>
+        <div style={{ marginTop: "10px", height: "150%" }}>
           {stockNames.map((name) => (
             <div
               key={name}
               style={{ display: topChart === name ? "block" : "none" }}
-            >
-              {stockComponents[name]}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom Chart */}
-      <div style={{ border: "1px solid #ccc", padding: "10px" }}>
-        <label>
-          Select Bottom Chart:
-          <select
-            value={bottomChart}
-            onChange={(e) => setBottomChart(e.target.value)}
-            style={{ marginLeft: "10px" }}
-          >
-            {stockNames.map((name) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <div style={{ marginTop: "10px", height: "100%" }}>
-          {stockNames.map((name) => (
-            <div
-              key={name + "_bottom"}
-              style={{ display: bottomChart === name ? "block" : "none" }}
             >
               {stockComponents[name]}
             </div>
