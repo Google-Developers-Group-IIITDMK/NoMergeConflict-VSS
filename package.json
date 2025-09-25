@@ -37,5 +37,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "Update the Readme",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Google-Developers-Group-IIITDMK/NoMergeConflict-VSS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Google-Developers-Group-IIITDMK/NoMergeConflict-VSS/issues"
+  },
+  "homepage": "https://github.com/Google-Developers-Group-IIITDMK/NoMergeConflict-VSS#readme"
 }
