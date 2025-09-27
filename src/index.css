@@ -97,3 +97,18 @@ body {
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
+
+
+.chart-container {
+  height: 400px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.trading-panel {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
