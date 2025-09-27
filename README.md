@@ -52,16 +52,22 @@ Each branch stock has its own price trend and volatility in the simulated market
 
 1. Clone the repository  
    
-   git clone https://github.com/your-username/virtual-stock-simulator.git
-   cd virtual-stock-simulator
+   "git clone https://github.com/Google-Developers-Group-IIITDMK/NoMergeConflict-VSS.git"
 
-2. Install dependencies
-    npm install
+2. Move into the directory
 
-3. Start the development server
-    npm start
+   "cd NoMergeConflict-VSS"
 
-4. Open in browser
+3. Install dependencies
+
+    "npm install"
+
+4. Start the development server
+
+    "npm start"
+
+5. Open in browser
+
     http://localhost:3000
 
 
