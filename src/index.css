@@ -64,3 +64,19 @@ body {
   align-items: center;
   margin-bottom: 20px;
 }
+
+
+.stock-selector {
+  padding: 10px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.stock-selector:focus {
+  outline: none;
+  border-color: #667eea;
+}
