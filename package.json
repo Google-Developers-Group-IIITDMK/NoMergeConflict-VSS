@@ -5,7 +5,9 @@
   "dependencies": {
     "lightweight-charts": "^4.2.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "recharts": "^3.2.1",
+    "web-vitals": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

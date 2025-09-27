@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+
+
 import { createChart, ColorType } from 'lightweight-charts';
 
 const StockChart = ({ data, currentPrice, stock, timeRange }) => {
