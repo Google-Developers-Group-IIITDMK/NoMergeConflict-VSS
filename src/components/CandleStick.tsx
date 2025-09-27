@@ -14,9 +14,10 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
     );
   }
 
-  const maxPrice = Math.max(...data.map(d => d.high));
-  const minPrice = Math.min(...data.map(d => d.low));
-  const priceRange = maxPrice - minPrice;
+  // Use fallback values to avoid undefined
+  const maxPrice = Math.max(...data.map(d => d.high ?? 0));
+  const minPrice = Math.min(...data.map(d => d.low ?? 0));
+  const priceRange = maxPrice - minPrice || 1; // avoid division by zero
   const padding = priceRange * 0.1;
 
   const chartHeight = 350;
@@ -26,6 +27,8 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
   const priceToY = (price: number) => {
     return ((maxPrice + padding - price) / (priceRange + 2 * padding)) * chartHeight;
   };
+
+  const maxVolume = Math.max(...data.map(d => d.volume ?? 0));
 
   return (
     <div className="w-full h-full overflow-x-auto">
@@ -65,17 +68,17 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
         {/* Candlesticks */}
         {data.map((candle, index) => {
           const x = 50 + index * 8;
-          const isGreen = candle.close >= candle.open;
+          const isGreen = (candle.close ?? 0) >= (candle.open ?? 0);
           const color = isGreen ? 'hsl(var(--success))' : 'hsl(var(--destructive))';
           
-          const highY = priceToY(candle.high) + 20;
-          const lowY = priceToY(candle.low) + 20;
-          const openY = priceToY(candle.open) + 20;
-          const closeY = priceToY(candle.close) + 20;
+          const highY = priceToY(candle.high ?? candle.open ?? 0) + 20;
+          const lowY = priceToY(candle.low ?? candle.close ?? 0) + 20;
+          const openY = priceToY(candle.open ?? candle.close ?? 0) + 20;
+          const closeY = priceToY(candle.close ?? candle.open ?? 0) + 20;
           
           const bodyTop = Math.min(openY, closeY);
           const bodyBottom = Math.max(openY, closeY);
-          const bodyHeight = Math.abs(closeY - openY);
+          const bodyHeight = Math.max(Math.abs(closeY - openY), 1);
 
           return (
             <g key={index}>
@@ -94,7 +97,7 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
                 x={x - candleWidth / 2}
                 y={bodyTop}
                 width={candleWidth}
-                height={Math.max(bodyHeight, 1)}
+                height={bodyHeight}
                 fill={isGreen ? 'transparent' : color}
                 stroke={color}
                 strokeWidth={1}
@@ -110,7 +113,7 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
                   textAnchor="middle"
                   transform={`rotate(-45 ${x} ${chartHeight + 45})`}
                 >
-                  {candle.time}
+                  {candle.time ?? ""}
                 </text>
               )}
             </g>
@@ -120,10 +123,9 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ data }) => {
         {/* Volume bars */}
         {data.map((candle, index) => {
           const x = 50 + index * 8;
-          const maxVolume = Math.max(...data.map(d => d.volume));
-          const volumeHeight = (candle.volume / maxVolume) * 40;
-          const isGreen = candle.close >= candle.open;
-          
+          const volumeHeight = maxVolume > 0 ? ((candle.volume ?? 0) / maxVolume) * 40 : 0;
+          const isGreen = (candle.close ?? 0) >= (candle.open ?? 0);
+
           return (
             <rect
               key={`volume-${index}`}
