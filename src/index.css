@@ -305,16 +305,12 @@ body {
   gap: 15px;
   align-items: center;
   flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
 }
 
 .chart-controls-right {
   display: flex;
   gap: 15px;
   align-items: center;
-  justify-content: center;
-  width: 100%;
 }
 
 .time-range-selector {
@@ -348,4 +344,36 @@ body {
     align-items: stretch;
   }
 
+   .chart-controls-left,
+  .chart-controls-right {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .stock-selector,
+  .time-range-selector {
+    flex: 1;
+    min-width: 150px;
+  }
+}
+
+.chart-container {
+  height: 400px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+}
+
+/* Price indicator */
+.price-indicator {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
 
