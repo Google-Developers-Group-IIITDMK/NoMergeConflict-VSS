@@ -236,3 +236,23 @@ body {
   font-weight: 600;
   color: #555;
 }
+
+.profit {
+  color: #00b09b;
+  font-weight: bold;
+}
+
+.loss {
+  color: #ff416c;
+  font-weight: bold;
+}
+
+.holdings-section {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 1024px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
