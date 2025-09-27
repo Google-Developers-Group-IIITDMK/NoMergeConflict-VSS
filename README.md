@@ -3,6 +3,9 @@
 A web-based **Virtual Stock Trading Simulator** that allows users to trade simulated stocks of four branches — **CSE, ECE, MECH, and AIDS** — with data generated using normal distributions which replicate real world market scenarios.
 This project is designed for learning the basics of trading, portfolio management, and data visualization using stock charts.
 
+
+## Disclaimer
+This game doesn't invole real money. This is made purely for fun and a new risk-free experience for many non-traders out there. Hope you enjoy our product.
 ---
 
 ## 🚀 Features
@@ -49,6 +52,10 @@ Each branch stock has its own price trend and volatility in the simulated market
 ---
 
 ## ⚙️ Installation & Setup
+
+
+- **Disclaimer**
+We tried to make use of Docker, but we were not able to successfully create the docker image. So, we only have one way to running in your local system.
 
 1. Clone the repository  
    
