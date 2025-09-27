@@ -29,7 +29,7 @@ Each branch stock has its own price trend and volatility in the simulated market
 
 ## 📸 Screenshot
 
-![App Screenshot](./final%20Project.png)  
+![App Screenshot](./finalimage.zip)  
 
 ---
 
