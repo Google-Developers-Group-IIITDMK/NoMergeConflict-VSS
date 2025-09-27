@@ -25,13 +25,13 @@ const StockWallet = ({ holdings, currentPrices }) => {
       <table className="portfolio-table">
         <thead>
           <tr>
-            {/* <th>Stock</th>
+            <th>Stock</th>
             <th>Quantity</th>
             <th>Avg. Price</th>
             <th>Current Price</th>
             <th>Current Value</th>
             <th>P&L</th>
-            <th>P&L %</th> */}
+            <th>P&L %</th>
           </tr>
         </thead>
         <tbody>
