@@ -848,3 +848,185 @@ body {
   align-items: center;
   gap: 10px;
 }
+
+/* Global Dark Mode Styles */
+.night-mode {
+  background-color: #0d1117;
+  color: #c9d1d9;
+  min-height: 100vh;
+}
+
+/* Wallet Styles */
+.wallet-light {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.wallet-dark {
+  background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+  color: #e5e7eb;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.wallet-amount {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Portfolio Styles */
+.portfolio-light {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.portfolio-dark {
+  background: #161b22;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.table-light {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.table-dark {
+  width: 100%;
+  border-collapse: collapse;
+  background: #161b22;
+  color: #c9d1d9;
+}
+
+.table-light th,
+.table-light td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.table-dark th,
+.table-dark td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #30363d;
+  color: #c9d1d9;
+}
+
+.table-dark th {
+  background: #1e2228;
+  color: #58a6ff;
+}
+
+.profit {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.loss {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+/* Trading Desk Styles */
+.trading-desk.night-mode {
+  background-color: #0d1117;
+  color: #c9d1d9;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Header Styles for Dark Mode */
+.trading-desk.night-mode .header {
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+}
+
+.trading-desk.night-mode .profile-menu {
+  background: #161b22;
+  border: 1px solid #30363d;
+  color: #c9d1d9;
+}
+
+.trading-desk.night-mode .profile-menu-item {
+  color: #c9d1d9;
+}
+
+.trading-desk.night-mode .profile-menu-item:hover {
+  background: #1e2228;
+}
+
+/* Chart Controls Dark Mode */
+.trading-desk.night-mode .chart-controls {
+  background: #161b22;
+  border: 1px solid #30363d;
+}
+
+.trading-desk.night-mode select,
+.trading-desk.night-mode .graph-type-btn {
+  background: #1e2228;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+}
+
+.trading-desk.night-mode .graph-type-btn.active {
+  background: #58a6ff;
+  color: #0d1117;
+}
+
+/* Login Dark Mode */
+.login-container.night-mode {
+  background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+  color: #c9d1d9;
+}
+
+.login-container.night-mode .login-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+}
+
+.login-container.night-mode .username-input {
+  background: #1e2228;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+}
+
+.login-container.night-mode .login-button {
+  background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+  color: white;
+}
+
+/* Notification Styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  z-index: 1000;
+  font-weight: bold;
+}
+
+.notification.success {
+  background: #10b981;
+  color: white;
+}
+
+.notification.error {
+  background: #ef4444;
+  color: white;
+}
+
+.trading-desk.night-mode .notification {
+  background: #1e2228;
+  border: 1px solid #30363d;
+}
