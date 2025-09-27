@@ -1,90 +1,118 @@
-// src/components/stockwallet.jsx
-import React, { useMemo, useState } from "react";
-
-/**
- * StockWallet
- * Props:
- *  - holdings: [{ ticker, qty, avgPrice }]
- *  - onSell({ticker, qty, price}) => { ok, reason }
- *
- * This component shows holdings and allows quick sell.
- * For demo we use a simple mockPrice function for current market price.
- */
+// StockWallet.jsx
+import React, { useState, useMemo } from "react";
 
 const mockPrice = (ticker) => {
-  // deterministic pseudo-prices (replace with real quotes)
-  const base = Math.abs(
-    ticker.split("").reduce((acc, c) => acc * 31 + c.charCodeAt(0), 7)
-  ) % 500;
-  return Math.round((base + 50 + (ticker.length % 7) * 3) * 100) / 100;
+  // same as your code or real price fetch
+  return Math.round((50 + ticker.length * 3 + ticker.charCodeAt(0) % 100) * 100) / 100;
 };
 
-export default function StockWallet({ holdings = [], onSell = () => {} }) {
-  const [selling, setSelling] = useState(null); // { ticker, qty }
+function StockWallet({ holdings = [], onSell = () => {} }) {
+  const [sellTicker, setSellTicker] = useState("");
+  const [sellQty, setSellQty] = useState("");
+  const [message, setMessage] = useState("");
 
   const totalValue = useMemo(() => {
     return holdings.reduce((sum, h) => sum + h.qty * mockPrice(h.ticker), 0);
   }, [holdings]);
 
-  const handleQuickSell = (ticker, qty) => {
+  const handleSellSubmit = (e) => {
+    e.preventDefault();
+    const ticker = sellTicker.trim().toUpperCase();
+    const qty = Number(sellQty);
+    if (!ticker) {
+      setMessage("Select a ticker to sell");
+      return;
+    }
+    if (!Number.isFinite(qty) || qty <= 0 || !Number.isInteger(qty)) {
+      setMessage("Enter a valid positive integer quantity");
+      return;
+    }
+    const holding = holdings.find((h) => h.ticker === ticker);
+    if (!holding) {
+      setMessage(`No holdings for ${ticker}`);
+      return;
+    }
+    if (qty > holding.qty) {
+      setMessage(`You only have ${holding.qty} shares of ${ticker}`);
+      return;
+    }
     const price = mockPrice(ticker);
-    const res = onSell({ ticker, qty, price });
-    if (!res.ok) {
-      alert(res.reason || "Could not sell");
+    const result = onSell({ ticker, qty, price });
+    if (!result.ok) {
+      setMessage(result.reason || "Sell failed");
+    } else {
+      setMessage(`Sold ${qty} ${ticker} @ ₹${price}`);
+      // clear form
+      setSellTicker("");
+      setSellQty("");
     }
   };
 
   return (
-    <div style={{ padding: 16, borderRadius: 8, border: "1px solid #ddd" }}>
-      <h3 style={{ marginTop: 0 }}>Stock Wallet</h3>
-      <div style={{ marginBottom: 8 }}>
-        Portfolio value (mock prices): <strong>₹{Math.round(totalValue).toLocaleString()}</strong>
-      </div>
+    <div style={{ padding: 16, border: "1px solid #ddd", borderRadius: 8 }}>
+      <h3>Stock Wallet</h3>
+      <div>Portfolio value: ₹{Math.round(totalValue).toLocaleString()}</div>
 
       {holdings.length === 0 ? (
-        <div style={{ color: "#666" }}>No holdings yet.</div>
+        <div>No holdings yet.</div>
       ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", marginTop: 16 }}>
           <thead>
-            <tr style={{ textAlign: "left", borderBottom: "1px solid #eee" }}>
-              <th>Ticker</th>
-              <th>Qty</th>
-              <th>Avg Price</th>
-              <th>Market</th>
-              <th>Value</th>
-              <th></th>
+            <tr>
+              <th>Ticker</th><th>Qty</th><th>Avg Price</th><th>Market</th><th>Value</th>
             </tr>
           </thead>
           <tbody>
             {holdings.map((h) => {
               const mkt = mockPrice(h.ticker);
               return (
-                <tr key={h.ticker} style={{ borderBottom: "1px solid #fafafa" }}>
-                  <td style={{ padding: "8px 0" }}>{h.ticker}</td>
+                <tr key={h.ticker}>
+                  <td>{h.ticker}</td>
                   <td>{h.qty}</td>
                   <td>₹{h.avgPrice}</td>
                   <td>₹{mkt}</td>
                   <td>₹{Math.round(h.qty * mkt)}</td>
-                  <td>
-                    <button
-                      onClick={() => handleQuickSell(h.ticker, Math.max(1, Math.floor(h.qty / 2)))}
-                      style={{ padding: "6px 8px" }}
-                    >
-                      Sell half
-                    </button>
-                    <button
-                      onClick={() => handleQuickSell(h.ticker, h.qty)}
-                      style={{ padding: "6px 8px", marginLeft: 8 }}
-                    >
-                      Sell all
-                    </button>
-                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       )}
+
+      <hr style={{ margin: "20px 0" }} />
+
+      {/* Sell form */}
+      <form onSubmit={handleSellSubmit} style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+        <div>
+          <label>Ticker</label>
+          <select
+            value={sellTicker}
+            onChange={(e) => setSellTicker(e.target.value)}
+          >
+            <option value="">Select ticker</option>
+            {holdings.map((h) => (
+              <option value={h.ticker} key={h.ticker}>{h.ticker}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Quantity to sell</label>
+          <input
+            type="number"
+            min="1"
+            value={sellQty}
+            onChange={(e) => setSellQty(e.target.value)}
+            placeholder="0"
+          />
+        </div>
+        <div>
+          <button type="submit">Sell</button>
+        </div>
+      </form>
+
+      {message && <div style={{ marginTop: 12, color: message.startsWith("Sold") ? "green" : "crimson" }}>{message}</div>}
     </div>
   );
 }
+
+export default StockWallet;
