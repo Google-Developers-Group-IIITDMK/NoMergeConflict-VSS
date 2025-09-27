@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ThemeContext } from '../App';
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
+  const { isNightMode, toggleNightMode } = useContext(ThemeContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,7 +17,7 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div className="login-container">
+    <div className={`login-container ${isNightMode ? 'night-mode' : ''}`}>
       <div className="login-card">
         <div className="login-header">
           <div className="logo">
@@ -59,9 +61,19 @@ export default function Login({ onLogin }) {
           </div>
         </div>
         
-        <p className="footer-note">
-          Perfect for learning Git/GitHub branching • No registration required
-        </p>
+        <div className="login-footer">
+          <button 
+            className="theme-toggle-login"
+            onClick={toggleNightMode}
+            title={isNightMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {isNightMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
+          </button>
+          
+          <p className="footer-note">
+            Perfect for learning Git/GitHub branching • No registration required
+          </p>
+        </div>
       </div>
     </div>
   );
