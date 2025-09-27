@@ -204,3 +204,35 @@ body {
 .buy-btn:active, .sell-btn:active {
   transform: translateY(0);
 }
+
+.portfolio {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.portfolio h3 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.portfolio-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.portfolio-table th,
+.portfolio-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.portfolio-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #555;
+}
