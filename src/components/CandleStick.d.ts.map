@@ -1,0 +1,1 @@
+{"version":3,"file":"CandleStick.d.ts","sourceRoot":"","sources":["CandleStick.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAC;AAC1B,OAAO,EAAE,cAAc,EAAE,MAAM,iBAAiB,CAAC;AAEjD,UAAU,qBAAqB;IAC7B,IAAI,EAAE,cAAc,EAAE,CAAC;CACxB;AAED,QAAA,MAAM,gBAAgB,EAAE,KAAK,CAAC,EAAE,CAAC,qBAAqB,CA8IrD,CAAC;AAEF,eAAe,gBAAgB,CAAC"}

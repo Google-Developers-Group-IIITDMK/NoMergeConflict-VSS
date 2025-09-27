@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# 📈 Virtual Stock Simulator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A web-based **Virtual Stock Trading Simulator** that allows users to trade simulated stocks of four branches — **CSE, ECE, MECH, and AIDS** — with real-time market-like data.  
+This project is designed for learning the basics of trading, portfolio management, and data visualization using stock charts.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- 🔥 **Live Stock Prices**: Real-time simulated stock values with dynamic charts.  
+- 💰 **Virtual Wallet**: Every user starts with a balance of **₹10,000**.  
+- 📊 **Candlestick Charts**: Visualize stock movements (powered by TradingView / Recharts).  
+- 📥 **Buy & Sell Stocks**: Trade stocks from the 4 available branches.  
+- 📑 **Portfolio Holdings**: Track quantity, average price, current price, P&L, and percentage change.  
+- 🖥 **Responsive UI**: Clean, modern interface with intuitive UX.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🏫 Available Branch Stocks
 
-### `npm test`
+- **CSE** – Computer Science Engineering  
+- **ECE** – Electronics & Communication Engineering  
+- **MECH** – Mechanical Engineering  
+- **AIDS** – Artificial Intelligence & Data Science  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Each branch stock has its own price trend and volatility in the simulated market.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📸 Screenshot
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![App Screenshot](./final%20Project.png)  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🛠 Tech Stack
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Frontend**: React.js, TailwindCSS, shadcn/ui  
+- **Charts**: Recharts / TradingView widget  
+- **State Management**: React Hooks / Context API  
+- **Backend (optional)**: Node.js, Express (for data simulation)  
+- **Deployment**: Vercel / Netlify  
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## ⚙️ Installation & Setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Clone the repository  
+   
+   git clone https://github.com/your-username/virtual-stock-simulator.git
+   cd virtual-stock-simulator
 
-## Learn More
+2. Install dependencies
+    npm install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Start the development server
+    npm start
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. Open in browser
+    http://localhost:3000
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+**🎮 How to Play**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Start with ₹10,000 wallet balance.
+Select a stock (CSE, ECE, MECH, AIDS).
+Enter the quantity and BUY or SELL.
+Track your portfolio in the Portfolio Holdings section.
+Try to maximize profits with strategic trades!
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**🧑‍🤝‍🧑 Team Members**
 
-### Advanced Configuration
+1.  G. Vikranth Reddy
+2.  P. Bhanu Prakash
+3.  G. Srivardhan
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**📌 Future Enhancements**
 
-### Deployment
+📡 Real-world API integration (NSE/BSE or Yahoo Finance).
+👥 Multi-user login with authentication.
+🏆 Leaderboard for top traders.
+📲 Mobile app version.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+*📜 License*
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License.
