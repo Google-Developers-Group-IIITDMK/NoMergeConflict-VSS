@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import StockChart from './StockChart';
 import Trade from './Trade';
 import MoneyWallet from './MoneyWallet';
 import StockWallet from './StockWallet';
+import { ThemeContext } from '../App';
 
-const TradingDesk = () => {
+const TradingDesk = ({ username, onLogout }) => {
   const [walletBalance, setWalletBalance] = useState(10000);
   const [selectedStock, setSelectedStock] = useState('aids');
-  const [timeRange, setTimeRange] = useState('1h'); // 10m, 1h, 6h, 24h, all
+  const [timeRange, setTimeRange] = useState('1h');
+  const [graphType, setGraphType] = useState('candles'); // 'candles' or 'line'
   const [holdings, setHoldings] = useState({
     aids: { quantity: 0, avgPrice: 0 },
     cse: { quantity: 0, avgPrice: 0 },
@@ -27,11 +29,35 @@ const TradingDesk = () => {
     mech: []
   });
   const [notification, setNotification] = useState(null);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  
+  const { isNightMode, toggleNightMode } = useContext(ThemeContext);
 
   const showNotification = (message, type) => {
     setNotification({ message, type });
     setTimeout(() => setNotification(null), 3000);
   };
+
+  const handleLogoutClick = () => {
+    onLogout();
+    showNotification(`Logged out successfully!`, 'success');
+  };
+
+  const toggleProfileMenu = () => {
+    setShowProfileMenu(!showProfileMenu);
+  };
+
+  // Close profile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      if (showProfileMenu) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [showProfileMenu]);
 
   const generateCandleData = useCallback((previousPrice) => {
     const changePercent = (Math.random() - 0.5) * 0.1;
@@ -68,7 +94,7 @@ const TradingDesk = () => {
         break;
       case 'all':
       default:
-        return data; // Return all data
+        return data;
     }
     
     return data.filter(candle => candle.time >= timeFilter);
@@ -86,10 +112,9 @@ const TradingDesk = () => {
         let currentPrice = basePrices[stock];
         const now = Date.now() / 1000;
         
-        // Generate 200 initial candles (about 3+ hours of data at 1-minute intervals)
         for (let i = 200; i >= 0; i--) {
           const candle = generateCandleData(currentPrice);
-          candle.time = now - (i * 60); // 1-minute intervals
+          candle.time = now - (i * 60);
           stockHistory.push(candle);
           currentPrice = candle.close;
         }
@@ -112,7 +137,6 @@ const TradingDesk = () => {
           const lastCandle = newHistory[stock][newHistory[stock].length - 1];
           const newCandle = generateCandleData(lastCandle.close);
           
-          // Append new candle instead of replacing old ones
           newHistory[stock] = [...newHistory[stock], newCandle];
           newPrices[stock] = newCandle.close;
         });
@@ -120,7 +144,7 @@ const TradingDesk = () => {
         setCurrentPrices(newPrices);
         return newHistory;
       });
-    }, 2000); // Add new candle every 2 seconds
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [generateCandleData]);
@@ -175,7 +199,7 @@ const TradingDesk = () => {
   const filteredData = getFilteredData(priceHistory[selectedStock]);
 
   return (
-    <div className="trading-desk">
+    <div className={`trading-desk ${isNightMode ? 'night-mode' : ''}`}>
       {notification && (
         <div className={`notification ${notification.type}`}>
           {notification.message}
@@ -183,8 +207,62 @@ const TradingDesk = () => {
       )}
       
       <div className="header">
-        <h1>📈 Stock Trading Desk</h1>
-        <p>Trade stocks in real-time with simulated market data</p>
+        <div className="header-left">
+          <h1>📈 Stock Trading Desk</h1>
+          <p>Trade stocks in real-time with simulated market data</p>
+        </div>
+        
+        <div className="header-right">
+          <div className="header-controls">
+            <button 
+              className="theme-toggle"
+              onClick={toggleNightMode}
+              title={isNightMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {isNightMode ? '☀️' : '🌙'}
+            </button>
+            
+            <div className="profile-section">
+              <div 
+                className="profile-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleProfileMenu();
+                }}
+              >
+                <span className="profile-icon">👤</span>
+                <span className="username">{username}</span>
+                <span className="dropdown-arrow">▼</span>
+              </div>
+              
+              {showProfileMenu && (
+                <div className="profile-menu">
+                  <div className="profile-menu-item user-info">
+                    <span>Logged in as:</span>
+                    <strong>{username}</strong>
+                  </div>
+                  <div className="profile-menu-divider"></div>
+                  <button 
+                    className="profile-menu-item theme-toggle-menu"
+                    onClick={toggleNightMode}
+                  >
+                    <span className="theme-icon">
+                      {isNightMode ? '☀️' : '🌙'}
+                    </span>
+                    {isNightMode ? 'Light Mode' : 'Dark Mode'}
+                  </button>
+                  <button 
+                    className="profile-menu-item logout-button"
+                    onClick={handleLogoutClick}
+                  >
+                    <span className="logout-icon">🚪</span>
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="dashboard">
@@ -213,6 +291,21 @@ const TradingDesk = () => {
                 <option value="24h">Last 24 hours</option>
                 <option value="all">All Time</option>
               </select>
+
+              <div className="graph-type-selector">
+                <button 
+                  className={`graph-type-btn ${graphType === 'candles' ? 'active' : ''}`}
+                  onClick={() => setGraphType('candles')}
+                >
+                  📊 Candles
+                </button>
+                <button 
+                  className={`graph-type-btn ${graphType === 'line' ? 'active' : ''}`}
+                  onClick={() => setGraphType('line')}
+                >
+                  📈 Line
+                </button>
+              </div>
             </div>
             
             <div className="chart-controls-right">
@@ -220,7 +313,7 @@ const TradingDesk = () => {
                 Live: ₹{currentPrices[selectedStock].toFixed(2)}
               </div>
               <div className="data-count">
-                Showing {filteredData.length} candles
+                Showing {filteredData.length} {graphType === 'candles' ? 'candles' : 'points'}
               </div>
             </div>
           </div>
@@ -230,6 +323,8 @@ const TradingDesk = () => {
             currentPrice={currentPrices[selectedStock]}
             stock={selectedStock}
             timeRange={timeRange}
+            graphType={graphType}
+            nightMode={isNightMode}
           />
         </div>
 

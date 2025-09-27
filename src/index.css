@@ -513,3 +513,338 @@ body {
   line-height: 1.4;
   margin: 0;
 }
+
+/* Profile Section Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.header-left h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.header-left p {
+  margin: 5px 0 0 0;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.profile-section {
+  position: relative;
+}
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.profile-button:hover {
+  background: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.profile-icon {
+  font-size: 1.2rem;
+}
+
+.username {
+  font-weight: 600;
+  color: #495057;
+}
+
+.dropdown-arrow {
+  font-size: 0.8rem;
+  color: #6c757d;
+  transition: transform 0.3s ease;
+}
+
+.profile-button:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.profile-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 10px;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.profile-menu-item {
+  padding: 12px 15px;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: default;
+}
+
+.user-info strong {
+  color: #495057;
+  font-size: 1rem;
+}
+
+.profile-menu-divider {
+  height: 1px;
+  background: #e9ecef;
+  margin: 5px 0;
+}
+
+.logout-button {
+  color: #dc3545;
+  font-weight: 500;
+}
+
+.logout-button:hover {
+  background: #fff5f5;
+}
+
+.logout-icon {
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .header-right {
+    align-self: flex-end;
+  }
+  
+  .header-left h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Night Mode Styles */
+.night-mode {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.night-mode .trading-desk {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.night-mode .login-container {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #ffffff;
+}
+
+.night-mode .login-card {
+  background: #2d2d2d;
+  border: 1px solid #404040;
+}
+
+.night-mode .username-input {
+  background: #404040;
+  color: #ffffff;
+  border: 1px solid #555;
+}
+
+.night-mode .username-input::placeholder {
+  color: #888;
+}
+
+.night-mode .login-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.night-mode .login-button:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+/* Theme Toggle Styles */
+.theme-toggle {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  margin-right: 15px;
+}
+
+.night-mode .theme-toggle {
+  background: #404040;
+  border-color: #555;
+  color: #ffd700;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle-login {
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+  color: inherit;
+}
+
+.night-mode .theme-toggle-login {
+  border-color: #555;
+  color: #ffd700;
+}
+
+.theme-toggle-login:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Graph Type Selector */
+.graph-type-selector {
+  display: flex;
+  gap: 5px;
+  margin-left: 15px;
+}
+
+.graph-type-btn {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background: #f8f9fa;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.night-mode .graph-type-btn {
+  background: #404040;
+  border-color: #555;
+  color: #ffffff;
+}
+
+.graph-type-btn.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.night-mode .graph-type-btn.active {
+  background: #0056b3;
+  border-color: #0056b3;
+}
+
+.graph-type-btn:hover:not(.active) {
+  background: #e9ecef;
+}
+
+.night-mode .graph-type-btn:hover:not(.active) {
+  background: #555;
+}
+
+/* Header Controls */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Night mode adjustments for other components */
+.night-mode .profile-button {
+  background: #404040;
+  border-color: #555;
+  color: #ffffff;
+}
+
+.night-mode .profile-menu {
+  background: #2d2d2d;
+  border-color: #404040;
+  color: #ffffff;
+}
+
+.night-mode .profile-menu-item:hover {
+  background: #404040;
+}
+
+.night-mode .stock-selector,
+.night-mode .time-range-selector {
+  background: #404040;
+  border-color: #555;
+  color: #ffffff;
+}
+
+.night-mode .notification {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .graph-type-selector {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .graph-type-btn {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .header-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .theme-toggle {
+    margin-right: 0;
+    align-self: flex-end;
+  }
+}
+
+.login-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
