@@ -255,4 +255,41 @@ body {
   .dashboard {
     grid-template-columns: 1fr;
   }
+  .chart-container {
+    height: 300px;
+  }
 }
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  z-index: 1000;
+  animation: slideIn 0.3s ease;
+}
+
+.notification.success {
+  background: linear-gradient(135deg, #00b09b, #96c93d);
+}
+
+.notification.error {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+
