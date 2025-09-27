@@ -33,13 +33,13 @@ const StockChart = ({ data, currentPrice, stock, timeRange }) => {
       },
     });
 
-    // seriesRef.current = chartRef.current.addCandlestickSeries({
-    //   upColor: '#00b09b',
-    //   downColor: '#ff416c',
-    //   borderVisible: false,
-    //   wickUpColor: '#00b09b',
-    //   wickDownColor: '#ff416c',
-    //   priceScaleId: 'right',
+    seriesRef.current = chartRef.current.addCandlestickSeries({
+      upColor: '#00b09b',
+      downColor: '#ff416c',
+      borderVisible: false,
+      wickUpColor: '#00b09b',
+      wickDownColor: '#ff416c',
+      priceScaleId: 'right',
     });
 
     // Add volume series if needed
