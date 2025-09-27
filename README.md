@@ -83,6 +83,3 @@ Try to maximize profits with strategic trades!
 🏆 Leaderboard for top traders.
 📲 Mobile app version.
 
-*📜 License*
-
-This project is licensed under the MIT License.
