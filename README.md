@@ -58,3 +58,31 @@ Each branch stock has its own price trend and volatility in the simulated market
 
 4. Open in browser
     http://localhost:3000
+
+
+
+**🎮 How to Play**
+
+Start with ₹10,000 wallet balance.
+Select a stock (CSE, ECE, MECH, AIDS).
+Enter the quantity and BUY or SELL.
+Track your portfolio in the Portfolio Holdings section.
+Try to maximize profits with strategic trades!
+
+
+**🧑‍🤝‍🧑 Team Members**
+
+1.  G. Vikranth Reddy
+2.  P. Bhanu Prakash
+3.  G. Srivardhan
+
+**📌 Future Enhancements**
+
+📡 Real-world API integration (NSE/BSE or Yahoo Finance).
+👥 Multi-user login with authentication.
+🏆 Leaderboard for top traders.
+📲 Mobile app version.
+
+*📜 License*
+
+This project is licensed under the MIT License.
