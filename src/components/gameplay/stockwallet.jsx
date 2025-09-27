@@ -1,57 +1,90 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+// src/components/stockwallet.jsx
+import React, { useMemo, useState } from "react";
 
 /**
- * MoneyWallet
- * 
- * Props: none
- * 
- * Methods exposed via ref:
- *  - updateMoney(change): updates wallet amount by `change` (can be positive or negative)
- *  - getCurrentStock(): returns current wallet amount
- * 
- * Usage:
- *  const walletRef = useRef();
- *  walletRef.current.updateMoney(50); // add $50
- *  const current = walletRef.current.getCurrentStock();
+ * StockWallet
+ * Props:
+ *  - holdings: [{ ticker, qty, avgPrice }]
+ *  - onSell({ticker, qty, price}) => { ok, reason }
+ *
+ * This component shows holdings and allows quick sell.
+ * For demo we use a simple mockPrice function for current market price.
  */
-const StockWallet = forwardRef((props, ref) => {
-  const [stock1, setAmount1] = useState(0); // initial state of $1000
-  const [stock2, setAmount2] = useState(0);
-  const [stock3, setAmount3] = useState(0); // initial state of $1000
-  const [stock4, setAmount4] = useState(0);
 
-  // Expose methods via ref
-  useImperativeHandle(ref, () => ({
-    updatestock1: (change) => {
-      setAmount1((prev) => prev + change);
-    },
-    getCurrentStock1: () => stock1,
+const mockPrice = (ticker) => {
+  // deterministic pseudo-prices (replace with real quotes)
+  const base = Math.abs(
+    ticker.split("").reduce((acc, c) => acc * 31 + c.charCodeAt(0), 7)
+  ) % 500;
+  return Math.round((base + 50 + (ticker.length % 7) * 3) * 100) / 100;
+};
 
-    updatestock2: (change) => {
-      setAmount2((prev) => prev + change);
-    },
-    getCurrentStock2: () => stock2,
+export default function StockWallet({ holdings = [], onSell = () => {} }) {
+  const [selling, setSelling] = useState(null); // { ticker, qty }
 
-    updatestock3: (change) => {
-      setAmount3((prev) => prev + change);
-    },
-    getCurrentStock3: () => stock3,
+  const totalValue = useMemo(() => {
+    return holdings.reduce((sum, h) => sum + h.qty * mockPrice(h.ticker), 0);
+  }, [holdings]);
 
-    updatestock4: (change) => {
-      setAmount4((prev) => prev + change);
-    },
-    getCurrentStock4: () => stock4,
-  }));
+  const handleQuickSell = (ticker, qty) => {
+    const price = mockPrice(ticker);
+    const res = onSell({ ticker, qty, price });
+    if (!res.ok) {
+      alert(res.reason || "Could not sell");
+    }
+  };
 
   return (
-    <div style={{ padding: "20px", border: "1px solid #ccc", width: "250px" }}>
-      <h3>Money Wallet</h3>
-      <p>Current Amount: ${stock1.toFixed(2)}</p>
-      <p>Current Amount: ${stock2.toFixed(2)}</p>
-      <p>Current Amount: ${stock3.toFixed(2)}</p>
-      <p>Current Amount: ${stock4.toFixed(2)}</p>
+    <div style={{ padding: 16, borderRadius: 8, border: "1px solid #ddd" }}>
+      <h3 style={{ marginTop: 0 }}>Stock Wallet</h3>
+      <div style={{ marginBottom: 8 }}>
+        Portfolio value (mock prices): <strong>₹{Math.round(totalValue).toLocaleString()}</strong>
+      </div>
+
+      {holdings.length === 0 ? (
+        <div style={{ color: "#666" }}>No holdings yet.</div>
+      ) : (
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ textAlign: "left", borderBottom: "1px solid #eee" }}>
+              <th>Ticker</th>
+              <th>Qty</th>
+              <th>Avg Price</th>
+              <th>Market</th>
+              <th>Value</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {holdings.map((h) => {
+              const mkt = mockPrice(h.ticker);
+              return (
+                <tr key={h.ticker} style={{ borderBottom: "1px solid #fafafa" }}>
+                  <td style={{ padding: "8px 0" }}>{h.ticker}</td>
+                  <td>{h.qty}</td>
+                  <td>₹{h.avgPrice}</td>
+                  <td>₹{mkt}</td>
+                  <td>₹{Math.round(h.qty * mkt)}</td>
+                  <td>
+                    <button
+                      onClick={() => handleQuickSell(h.ticker, Math.max(1, Math.floor(h.qty / 2)))}
+                      style={{ padding: "6px 8px" }}
+                    >
+                      Sell half
+                    </button>
+                    <button
+                      onClick={() => handleQuickSell(h.ticker, h.qty)}
+                      style={{ padding: "6px 8px", marginLeft: 8 }}
+                    >
+                      Sell all
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
-});
-
-export default StockWallet;
+}
