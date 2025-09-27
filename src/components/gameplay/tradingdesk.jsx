@@ -1,93 +1,69 @@
-import React, { useRef, useState } from "react";
+// src/components/gameplay/tradingdesk.jsx
+import React, { useState } from "react";
 import MoneyWallet from "./moneywallet";
 import StockWallet from "./stockwallet";
-// import TradingDesk from "./tradingdesk"
 import Trade from "./trade";
 
-export default function TradingDesk({ stockPrices = {} }) {
-  // stockPrices should be an object like: 
-  // { AIDS: 123.45, CSE: 98.76, ECE: 110.2, MECH: 77.1 }
+function TradingDesk() {
+  const [balance, setBalance] = useState(10000); // starting cash
+  const [holdings, setHoldings] = useState([]);  // array of { ticker, qty, avgPrice }
 
-  const moneyWalletRef = useRef();
-  const stockWalletRef = useRef();
+  // Buy stock
+  const buyStock = ({ ticker, qty, price }) => {
+    const cost = qty * price;
+    if (cost > balance) {
+      return { ok: false, reason: "Not enough balance" };
+    }
 
-  const [selectedStock, setSelectedStock] = useState("AIDS");
+    setBalance((b) => b - cost);
 
-  // Map stock names to the right wallet updater functions
-  const stockMethods = {
-    AIDS: {
-      update: (change) => stockWalletRef.current.updatestock1(change),
-      get: () => stockWalletRef.current.getCurrentStock1(),
-    },
-    CSE: {
-      update: (change) => stockWalletRef.current.updatestock2(change),
-      get: () => stockWalletRef.current.getCurrentStock2(),
-    },
-    ECE: {
-      update: (change) => stockWalletRef.current.updatestock3(change),
-      get: () => stockWalletRef.current.getCurrentStock3(),
-    },
-    MECH: {
-      update: (change) => stockWalletRef.current.updatestock4(change),
-      get: () => stockWalletRef.current.getCurrentStock4(),
-    },
+    setHoldings((prev) => {
+      const existing = prev.find((h) => h.ticker === ticker);
+      if (existing) {
+        const newQty = existing.qty + qty;
+        const newAvg =
+          (existing.avgPrice * existing.qty + price * qty) / newQty;
+        return prev.map((h) =>
+          h.ticker === ticker ? { ...h, qty: newQty, avgPrice: newAvg } : h
+        );
+      }
+      return [...prev, { ticker, qty, avgPrice: price }];
+    });
+
+    return { ok: true };
+  };
+
+  // Sell stock
+  const sellStock = ({ ticker, qty, price }) => {
+    const existing = holdings.find((h) => h.ticker === ticker);
+    if (!existing) {
+      return { ok: false, reason: `No holdings for ${ticker}` };
+    }
+    if (qty > existing.qty) {
+      return { ok: false, reason: `You only own ${existing.qty} shares` };
+    }
+
+    const proceeds = qty * price;
+    setBalance((b) => b + proceeds);
+
+    setHoldings((prev) =>
+      prev
+        .map((h) =>
+          h.ticker === ticker ? { ...h, qty: h.qty - qty } : h
+        )
+        .filter((h) => h.qty > 0)
+    );
+
+    return { ok: true };
   };
 
   return (
-    <div style={{ marginTop: "20px" }}>
-      {/* Bottom Section → Wallets + Trading panel in one horizontal row */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          gap: "20px",
-        }}
-      >
-        {/* Wallets side by side */}
-        <div style={{ display: "flex", gap: "20px" }}>
-          <MoneyWallet ref={moneyWalletRef} />
-          <StockWallet ref={stockWalletRef} />
-        </div>
-
-        {/* Trade Box */}
-        <div>
-          <div style={{ marginBottom: "15px" }}>
-            <label>
-              Select Stock:
-              {stockPrices && Object.keys(stockPrices).length > 0 ? (
-                <select
-                  value={selectedStock}
-                  onChange={(e) => setSelectedStock(e.target.value)}
-                  style={{ marginLeft: "10px" }}
-                >
-                  {Object.keys(stockPrices).map((name) => (
-                    <option key={name} value={name}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <span style={{ marginLeft: "10px" }}>
-                  No stock prices available
-                </span>
-              )}
-            </label>
-          </div>
-
-          {/* Pass correct wallet + stock methods + current stock price */}
-          <Trade
-            moneyWalletRef={moneyWalletRef}
-            stockWalletRef={{
-              current: {
-                updatestock1: stockMethods[selectedStock].update,
-                getCurrentStock1: stockMethods[selectedStock].get,
-              },
-            }}
-            stockPrice={stockPrices[selectedStock] ?? 0} // safe fallback
-          />
-        </div>
-      </div>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <MoneyWallet balance={balance} />
+      <Trade balance={balance} onBuy={buyStock} onSell={sellStock} holdings={holdings} />
+      <StockWallet holdings={holdings} onSell={sellStock} />
     </div>
   );
 }
+
+export default TradingDesk;
