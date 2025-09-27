@@ -324,6 +324,7 @@ const TradingDesk = ({ username, onLogout }) => {
             stock={selectedStock}
             timeRange={timeRange}
             graphType={graphType}
+            nightMode={isNightMode}
           />
         </div>
 
