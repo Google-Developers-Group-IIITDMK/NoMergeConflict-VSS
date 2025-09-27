@@ -1,6 +1,6 @@
 # 📈 Virtual Stock Simulator
 
-A web-based **Virtual Stock Trading Simulator** that allows users to trade simulated stocks of four branches — **CSE, ECE, MECH, and AIDS** — with real-time market-like data.  
+A web-based **Virtual Stock Trading Simulator** that allows users to trade simulated stocks of four branches — **CSE, ECE, MECH, and AIDS** — with data generated using normal distributions which replicate real world market scenarios.
 This project is designed for learning the basics of trading, portfolio management, and data visualization using stock charts.
 
 ---
@@ -27,9 +27,16 @@ Each branch stock has its own price trend and volatility in the simulated market
 
 ---
 
-## 📸 Screenshot
+## 📸 Overlook into our product
 
-![App Screenshot](./final%20Project.png) 
+- **Login Page**
+![Alt text](images/LoginPage.png)
+ 
+ -**TradingDesk**
+ ![Alt text](images/TradingDesk.jpg)
+
+ -**Dark Mode**
+ ![Alt](images/dark mode portfolio.png)
 
 ---
 
