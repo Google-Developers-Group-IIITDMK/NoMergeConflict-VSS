@@ -1,7 +1,5 @@
-# Enforce LF line endings for all text files
 * text=auto eol=lf
 
-# Optional: be explicit for JS/TS/HTML/CSS/etc
 *.js text eol=lf
 *.jsx text eol=lf
 *.ts text eol=lf
