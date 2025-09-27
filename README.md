@@ -33,10 +33,10 @@ Each branch stock has its own price trend and volatility in the simulated market
 ![Alt text](images/LoginPage.png)
  
  -**TradingDesk**
- ![Alt text](images/TradingDesk.jpg)
+ ![Alt text](images/TradingDesk.png)
 
  -**Dark Mode**
- ![Alt](images/dark mode portfolio.png)
+ ![Alt](images/dark_mode.png)
 
 ---
 
