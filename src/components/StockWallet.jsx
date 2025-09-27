@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../App';
 
 const StockWallet = ({ holdings, currentPrices }) => {
+  const { isNightMode } = useContext(ThemeContext);
   const stocks = ['aids', 'cse', 'ece', 'mech'];
 
   const calculateProfitLoss = (stock) => {
@@ -20,9 +22,9 @@ const StockWallet = ({ holdings, currentPrices }) => {
   };
 
   return (
-    <div className="portfolio">
+    <div className={`portfolio ${isNightMode ? 'portfolio-dark' : 'portfolio-light'}`}>
       <h3>📊 Portfolio Holdings</h3>
-      <table className="portfolio-table">
+      <table className={`portfolio-table ${isNightMode ? 'table-dark' : 'table-light'}`}>
         <thead>
           <tr>
             <th>Stock</th>
