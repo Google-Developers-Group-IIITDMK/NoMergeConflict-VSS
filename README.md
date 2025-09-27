@@ -29,7 +29,7 @@ Each branch stock has its own price trend and volatility in the simulated market
 
 ## 📸 Screenshot
 
-![App Screenshot](./final%20Project.png)  
+![App Screenshot](./final%20Project.png) 
 
 ---
 
@@ -38,8 +38,6 @@ Each branch stock has its own price trend and volatility in the simulated market
 - **Frontend**: React.js, TailwindCSS, shadcn/ui  
 - **Charts**: Recharts / TradingView widget  
 - **State Management**: React Hooks / Context API  
-- **Backend (optional)**: Node.js, Express (for data simulation)  
-- **Deployment**: Vercel / Netlify  
 
 ---
 
@@ -82,7 +80,3 @@ Try to maximize profits with strategic trades!
 👥 Multi-user login with authentication.
 🏆 Leaderboard for top traders.
 📲 Mobile app version.
-
-*📜 License*
-
-This project is licensed under the MIT License.
