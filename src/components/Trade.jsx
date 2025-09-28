@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Trade = ({ onTrade, selectedStock, onStockChange, currentPrice }) => {
+const Trade = ({ onTrade, selectedStock, onStockChange, currentPrice, currentPrices }) => {
   const [quantity, setQuantity] = useState('');
 
   const handleSubmit = (action) => {
@@ -14,6 +14,15 @@ const Trade = ({ onTrade, selectedStock, onStockChange, currentPrice }) => {
     if (success) {
       setQuantity('');
     }
+  };
+
+  // Calculate total for Buy All
+  const calculateTotal = () => {
+    const qty = parseInt(quantity) || 0;
+    if (selectedStock === 'all') {
+      return Object.values(currentPrices).reduce((sum, price) => sum + price, 0) * qty;
+    }
+    return currentPrice * qty;
   };
 
   return (
@@ -31,11 +40,25 @@ const Trade = ({ onTrade, selectedStock, onStockChange, currentPrice }) => {
           <option value="cse">CSE</option>
           <option value="ece">ECE</option>
           <option value="mech">MECH</option>
+          <option value="all">ALL STOCKS</option>
         </select>
       </div>
 
       <div className="form-group">
-        <label>Current Price: ₹{currentPrice.toFixed(2)}</label>
+        <label>
+          {selectedStock === 'all' ? 'Combined Price:' : 'Current Price:'} 
+          ₹{currentPrice.toFixed(2)}
+        </label>
+        {selectedStock === 'all' && (
+          <div className="price-breakdown">
+            <small>
+              AIDS: ₹{currentPrices.aids.toFixed(2)} + 
+              CSE: ₹{currentPrices.cse.toFixed(2)} + 
+              ECE: ₹{currentPrices.ece.toFixed(2)} + 
+              MECH: ₹{currentPrices.mech.toFixed(2)}
+            </small>
+          </div>
+        )}
       </div>
 
       <div className="form-group">
@@ -54,19 +77,28 @@ const Trade = ({ onTrade, selectedStock, onStockChange, currentPrice }) => {
           className="buy-btn"
           onClick={() => handleSubmit('buy')}
         >
-          BUY
+          {selectedStock === 'all' ? 'BUY ALL' : 'BUY'}
         </button>
-        <button 
-          className="sell-btn"
-          onClick={() => handleSubmit('sell')}
-        >
-          SELL
-        </button>
+        {selectedStock !== 'all' && (
+          <button 
+            className="sell-btn"
+            onClick={() => handleSubmit('sell')}
+          >
+            SELL
+          </button>
+        )}
       </div>
 
       {quantity && (
-        <div style={{ marginTop: '15px', padding: '10px', background: '#f8f9fa', borderRadius: '5px' }}>
-          <strong>Total: ₹{(currentPrice * parseInt(quantity) || 0).toFixed(2)}</strong>
+        <div className="trade-summary">
+          <strong>Total: ₹{calculateTotal().toFixed(2)}</strong>
+          {selectedStock === 'all' && (
+            <div className="breakdown">
+              <small>
+                You'll get {quantity} shares of each: AIDS, CSE, ECE, MECH
+              </small>
+            </div>
+          )}
         </div>
       )}
     </div>
