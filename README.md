@@ -1,8 +1,11 @@
 # 📈 Virtual Stock Simulator
 
-A web-based **Virtual Stock Trading Simulator** that allows users to trade simulated stocks of four branches — **CSE, ECE, MECH, and AIDS** — with real-time market-like data.  
+A web-based **Virtual Stock Trading Simulator** that allows users to trade simulated stocks of four branches — **CSE, ECE, MECH, and AIDS** — with data generated using normal distributions which replicate real world market scenarios.
 This project is designed for learning the basics of trading, portfolio management, and data visualization using stock charts.
 
+
+## Disclaimer
+This game doesn't invole real money. This is made purely for fun and a new risk-free experience for many non-traders out there. Hope you enjoy our product.
 ---
 
 ## 🚀 Features
@@ -27,9 +30,16 @@ Each branch stock has its own price trend and volatility in the simulated market
 
 ---
 
-## 📸 Screenshot
+## 📸 Overlook into our product
 
-![App Screenshot](./final%20Project.png) 
+- **Login Page**
+![Alt text](images/LoginPage.png)
+ 
+ -**TradingDesk**
+ ![Alt text](images/TradingDesk.png)
+
+ -**Dark Mode**
+ ![Alt](images/dark_mode.png)
 
 ---
 
@@ -43,18 +53,28 @@ Each branch stock has its own price trend and volatility in the simulated market
 
 ## ⚙️ Installation & Setup
 
+
+- **Disclaimer**
+We tried to make use of Docker, but we were not able to successfully create the docker image. So, we only have one way to running in your local system.
+
 1. Clone the repository  
    
-   git clone https://github.com/your-username/virtual-stock-simulator.git
-   cd virtual-stock-simulator
+   "git clone https://github.com/Google-Developers-Group-IIITDMK/NoMergeConflict-VSS.git"
 
-2. Install dependencies
-    npm install
+2. Move into the directory
 
-3. Start the development server
-    npm start
+   "cd NoMergeConflict-VSS"
 
-4. Open in browser
+3. Install dependencies
+
+    "npm install"
+
+4. Start the development server
+
+    "npm start"
+
+5. Open in browser
+
     http://localhost:3000
 
 

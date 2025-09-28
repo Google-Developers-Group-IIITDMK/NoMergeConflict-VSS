@@ -1030,3 +1030,44 @@ body {
   background: #1e2228;
   border: 1px solid #30363d;
 }
+
+/* Add these styles to your existing CSS file */
+
+.price-breakdown {
+  margin-top: 5px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  font-size: 0.8em;
+}
+
+.trade-summary {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+
+.trade-summary .breakdown {
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Style for the Buy All button */
+.buy-btn[data-all="true"] {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  font-weight: bold;
+}
+
+.buy-btn[data-all="true"]:hover {
+  background: linear-gradient(135deg, #218838, #1e9e8a);
+}
+
+.night-mode .trade-summary {
+  background: #212529;
+}
+
+.night-mode .price-breakdown {
+  background: rgba(255, 255, 255, 0.1);
+}
