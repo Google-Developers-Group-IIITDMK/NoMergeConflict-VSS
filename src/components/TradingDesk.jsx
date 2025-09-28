@@ -9,7 +9,7 @@ const TradingDesk = ({ username, onLogout }) => {
   const [walletBalance, setWalletBalance] = useState(10000);
   const [selectedStock, setSelectedStock] = useState('aids');
   const [timeRange, setTimeRange] = useState('1h');
-  const [graphType, setGraphType] = useState('candles'); // 'candles' or 'line'
+  const [graphType, setGraphType] = useState('candles');
   const [holdings, setHoldings] = useState({
     aids: { quantity: 0, avgPrice: 0 },
     cse: { quantity: 0, avgPrice: 0 },
@@ -26,7 +26,8 @@ const TradingDesk = ({ username, onLogout }) => {
     aids: [],
     cse: [],
     ece: [],
-    mech: []
+    mech: [],
+    combined: [] // New combined history
   });
   const [notification, setNotification] = useState(null);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -47,7 +48,6 @@ const TradingDesk = ({ username, onLogout }) => {
     setShowProfileMenu(!showProfileMenu);
   };
 
-  // Close profile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = () => {
       if (showProfileMenu) {
@@ -74,7 +74,45 @@ const TradingDesk = ({ username, onLogout }) => {
     };
   }, []);
 
-  // Filter data based on selected time range
+  // Calculate combined price data
+  const calculateCombinedPrice = useCallback((history, stocks) => {
+    if (history.aids.length === 0) return [];
+    
+    const combinedData = [];
+    const dataLength = history.aids.length;
+    
+    for (let i = 0; i < dataLength; i++) {
+      let totalClose = 0;
+      let totalOpen = 0;
+      let totalHigh = 0;
+      let totalLow = 0;
+      
+      stocks.forEach(stock => {
+        if (history[stock][i]) {
+          totalClose += history[stock][i].close;
+          totalOpen += history[stock][i].open;
+          totalHigh += history[stock][i].high;
+          totalLow += history[stock][i].low;
+        }
+      });
+      
+      combinedData.push({
+        open: totalOpen,
+        high: totalHigh,
+        low: totalLow,
+        close: totalClose,
+        time: history.aids[i].time
+      });
+    }
+    
+    return combinedData;
+  }, []);
+
+  // Get current combined price
+  const getCurrentCombinedPrice = useCallback((prices) => {
+    return Object.values(prices).reduce((sum, price) => sum + price, 0);
+  }, []);
+
   const getFilteredData = useCallback((data) => {
     const now = Date.now() / 1000;
     let timeFilter;
@@ -123,6 +161,9 @@ const TradingDesk = ({ username, onLogout }) => {
         setCurrentPrices(prev => ({ ...prev, [stock]: currentPrice }));
       });
       
+      // Initialize combined history
+      history.combined = calculateCombinedPrice(history, stocks);
+      
       setPriceHistory(history);
     };
 
@@ -141,15 +182,52 @@ const TradingDesk = ({ username, onLogout }) => {
           newPrices[stock] = newCandle.close;
         });
         
+        // Update combined history
+        newHistory.combined = calculateCombinedPrice(newHistory, stocks);
+        
         setCurrentPrices(newPrices);
         return newHistory;
       });
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [generateCandleData]);
+  }, [generateCandleData, calculateCombinedPrice]);
 
   const handleTrade = (action, stock, quantity) => {
+    // Handle "all" stock case
+    if (stock === 'all') {
+      if (action === 'buy') {
+        const totalCost = getCurrentCombinedPrice(currentPrices) * quantity;
+        if (totalCost > walletBalance) {
+          showNotification('Insufficient funds to buy all stocks!', 'error');
+          return false;
+        }
+        
+        setWalletBalance(prev => prev - totalCost);
+        
+        setHoldings(prev => {
+          const newHoldings = { ...prev };
+          Object.keys(currentPrices).forEach(stockKey => {
+            const current = prev[stockKey];
+            const price = currentPrices[stockKey];
+            const newQuantity = current.quantity + quantity;
+            const newAvgPrice = current.quantity === 0 ? price : 
+              ((current.quantity * current.avgPrice) + (price * quantity)) / newQuantity;
+            
+            newHoldings[stockKey] = {
+              quantity: newQuantity,
+              avgPrice: newAvgPrice
+            };
+          });
+          return newHoldings;
+        });
+        
+        showNotification(`Successfully bought ${quantity} shares of each stock`, 'success');
+      }
+      return true;
+    }
+    
+    // Original individual stock trading logic
     const price = currentPrices[stock];
     const totalValue = price * quantity;
 
@@ -197,6 +275,7 @@ const TradingDesk = ({ username, onLogout }) => {
   };
 
   const filteredData = getFilteredData(priceHistory[selectedStock]);
+  const currentCombinedPrice = getCurrentCombinedPrice(currentPrices);
 
   return (
     <div className={`trading-desk ${isNightMode ? 'night-mode' : ''}`}>
@@ -278,6 +357,7 @@ const TradingDesk = ({ username, onLogout }) => {
                 <option value="cse">CSE - ₹{currentPrices.cse.toFixed(2)}</option>
                 <option value="ece">ECE - ₹{currentPrices.ece.toFixed(2)}</option>
                 <option value="mech">MECH - ₹{currentPrices.mech.toFixed(2)}</option>
+                <option value="combined">COMBINED - ₹{currentCombinedPrice.toFixed(2)}</option>
               </select>
               
               <select 
@@ -310,7 +390,11 @@ const TradingDesk = ({ username, onLogout }) => {
             
             <div className="chart-controls-right">
               <div className="live-price">
-                Live: ₹{currentPrices[selectedStock].toFixed(2)}
+                Live: ₹{
+                  selectedStock === 'combined' 
+                    ? currentCombinedPrice.toFixed(2)
+                    : currentPrices[selectedStock].toFixed(2)
+                }
               </div>
               <div className="data-count">
                 Showing {filteredData.length} {graphType === 'candles' ? 'candles' : 'points'}
@@ -320,7 +404,11 @@ const TradingDesk = ({ username, onLogout }) => {
           
           <StockChart 
             data={filteredData} 
-            currentPrice={currentPrices[selectedStock]}
+            currentPrice={
+              selectedStock === 'combined' 
+                ? currentCombinedPrice
+                : currentPrices[selectedStock]
+            }
             stock={selectedStock}
             timeRange={timeRange}
             graphType={graphType}
@@ -334,7 +422,12 @@ const TradingDesk = ({ username, onLogout }) => {
             onTrade={handleTrade}
             selectedStock={selectedStock}
             onStockChange={setSelectedStock}
-            currentPrice={currentPrices[selectedStock]}
+            currentPrice={
+              selectedStock === 'combined' 
+                ? currentCombinedPrice
+                : currentPrices[selectedStock]
+            }
+            currentPrices={currentPrices} // Pass all current prices for Buy All calculation
           />
         </div>
 
